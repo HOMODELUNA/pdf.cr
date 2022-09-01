@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="pdf">
-  <title>PDF::Document::Trailer - pdf master-dev</title>
+  <title>PDF::Document::Encrypt - pdf master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -96,7 +96,7 @@
       
     </li>
   
-  <li class=" " data-id="pdf/PDF/Document/Encrypt" data-name="pdf::document::encrypt">
+  <li class=" current" data-id="pdf/PDF/Document/Encrypt" data-name="pdf::document::encrypt">
       <a href="../../PDF/Document/Encrypt.html">Encrypt</a>
       
     </li>
@@ -106,7 +106,7 @@
       
     </li>
   
-  <li class=" current" data-id="pdf/PDF/Document/Trailer" data-name="pdf::document::trailer">
+  <li class=" " data-id="pdf/PDF/Document/Trailer" data-name="pdf::document::trailer">
       <a href="../../PDF/Document/Trailer.html">Trailer</a>
       
     </li>
@@ -165,12 +165,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> PDF::Document::Trailer
+  <span class="kind">class</span> PDF::Document::Encrypt
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../PDF/Document/Trailer.html">PDF::Document::Trailer</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../PDF/Document/Encrypt.html">PDF::Document::Encrypt</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -184,36 +184,22 @@
     Overview
   </h2>
 
-  <p>The trailer of a PDF file enables an application reading the file to quickly find the
-cross-reference table and certain special objects. Applications should read a PDF
-file from its end. The last line of the file contains only the end-of-file marker,
-%%EOF. (See implementation note 15 in Appendix H.) The two preceding lines
-contain the keyword <strong>startxref</strong> and the byte offset from the beginning of the file to
-the beginning of the xref keyword in the last cross-reference section.
-The <strong>startxref</strong> line is preceded by the trailer dictionary,
-consisting of the keyword trailer followed by a series of key-value pairs enclosed in double angle brackets.
-Thus the trailer has the following overall structure:</p>
-<pre><code class="language-plaintext">trailer
- &lt;&lt; key1 value1
-    key2 value2 …
-    keyn valuen
- &gt;&gt;
-startxref
-Byte_offset_of_last_cross-reference_section
-%%EOF</code></pre>
-<p>Here is a factual trailer:</p>
-<pre><code class="language-crystal">trailer
-&lt;&lt; /Size 22
- /Root 2 0 R
- /Info 1 0 R
- /ID [ &lt;81b14aafa313db63dbd6f981e49f94f4&gt;
-&lt;81b14aafa313db63dbd6f981e49f94f4&gt;
-]
-&gt;&gt;
-startxref
-18799
-%%EOF
-```</code></pre>
+  <p>A PDF document can be encrypted (PDF 1.1) to protect its contents from unauthorized access.</p>
+<p>Encryption applies to all strings and streams in the document’s
+PDF file, but not to other object types such as integers and boolean values, which
+are used primarily to convey information about the document’s structure rather
+than its content. Leaving these values unencrypted allows random access to the
+objects within a document, while encrypting the strings and streams protects the
+document’s substantive contents.</p>
+<p>Note: When a PDF stream object (see Section 3.2.7, “Stream Objects”) refers to an
+external file, the stream’s contents are not encrypted, since they are not part of the
+PDF file itself. However, if the contents of the stream are embedded within the PDF
+file (see Section 3.10.3, “Embedded File Streams”), they are encrypted like any other
+stream in the file.</p>
+<p>Encryption is controlled by an encryption dictionary, which is the value of the
+Encrypt entry in the document’s trailer dictionary (see Table 3.11 on page 61). If
+this entry is absent from the trailer dictionary, the document is not encrypted.
+The entries shown in Table 3.12 are common to all encryption dictionaries.</p>
 
 
 
@@ -238,14 +224,50 @@ startxref
   </h2>
   
     
-      src\pdf\document\trailer.cr
+      src\pdf\document\encrypt.cr
     
     <br/>
   
 
 
 
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="DEFAULT">
+        <strong>DEFAULT</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+  </dl>
 
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28filter%3APDF%3A%3AName%2Cv%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(filter : PDF::Name, v : Int32? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -262,9 +284,7 @@ startxref
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#size-instance-method" class="signature"><strong>#size</strong></a>
-        
-          <div class="summary"><p>The total number of entries in the file’s cross-reference table, as defined by the combination of the original section and all update sections.</p></div>
+        <a href="#to_h%3AHash%28String%2CName%29-instance-method" class="signature"><strong>#to_h</strong> : Hash(String, Name)</a>
         
       </li>
     
@@ -299,6 +319,30 @@ startxref
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(filter:PDF::Name,v:Int32?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(filter : <a href="../../PDF/Name.html">PDF::Name</a>, v : Int32? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28filter%3APDF%3A%3AName%2Cv%3AInt32%3F%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
 
 
 
@@ -312,20 +356,13 @@ startxref
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="size-instance-method">
+    <div class="entry-detail" id="to_h:Hash(String,Name)-instance-method">
       <div class="signature">
         
-        def <strong>size</strong>
+        def <strong>to_h</strong> : Hash(String, <a href="../../PDF/Name.html">Name</a>)
 
-        <a class="method-permalink" href="#size-instance-method">#</a>
+        <a class="method-permalink" href="#to_h%3AHash%28String%2CName%29-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>The total number of entries in the file’s cross-reference table, as defined
-by the combination of the original section and all update sections. Equivalently, this
-value is 1 greater than the highest object number used in the file.</p>
-        </div>
       
       <br/>
       <div>

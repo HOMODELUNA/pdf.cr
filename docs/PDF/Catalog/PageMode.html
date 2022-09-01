@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="pdf">
-  <title>PDF::Document::CrossRef - pdf master-dev</title>
+  <title>PDF::Catalog::PageMode - pdf master-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -56,7 +56,7 @@
       
         <ul>
   
-  <li class="parent " data-id="pdf/PDF/Catalog" data-name="pdf::catalog">
+  <li class="parent open current" data-id="pdf/PDF/Catalog" data-name="pdf::catalog">
       <a href="../../PDF/Catalog.html">Catalog</a>
       
         <ul>
@@ -66,7 +66,7 @@
       
     </li>
   
-  <li class=" " data-id="pdf/PDF/Catalog/PageMode" data-name="pdf::catalog::pagemode">
+  <li class=" current" data-id="pdf/PDF/Catalog/PageMode" data-name="pdf::catalog::pagemode">
       <a href="../../PDF/Catalog/PageMode.html">PageMode</a>
       
     </li>
@@ -76,12 +76,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="pdf/PDF/Document" data-name="pdf::document">
+  <li class="parent " data-id="pdf/PDF/Document" data-name="pdf::document">
       <a href="../../PDF/Document.html">Document</a>
       
         <ul>
   
-  <li class="parent open current" data-id="pdf/PDF/Document/CrossRef" data-name="pdf::document::crossref">
+  <li class="parent " data-id="pdf/PDF/Document/CrossRef" data-name="pdf::document::crossref">
       <a href="../../PDF/Document/CrossRef.html">CrossRef</a>
       
         <ul>
@@ -165,12 +165,10 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> PDF::Document::CrossRef
+  <span class="kind">enum</span> PDF::Catalog::PageMode
 
 </h1>
 
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../PDF/Document/CrossRef.html">PDF::Document::CrossRef</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -184,39 +182,10 @@
     Overview
   </h2>
 
-  <p>The cross-reference table contains information that permits random access to indirect objects within the file,
-so that the entire file need not be read to locate any particular object.
-The table contains a one-line entry for each indirect object,
-specifying the location of that object within the body of the file.</p>
-<p>The cross-reference table is the only part of a PDF file with a fixed format;
-thispermits entries in the table to be accessed randomly.
-The table comprises one ormore cross-reference sections.
-Initially, the entire table consists of a single section;
-one additional section is added each time the file is updated (see Section 3.4.5,“Incremental Updates”).</p>
-<p>Each cross-reference section begins with a line containing the keyword xref.
-Following this line are one or more cross-reference subsections, which may appear in any order.
-The subsection structure is useful for incremental updates,
-since it allows a new cross-reference section to be added to the PDF file,
-containing entries only for objects that have been added or deleted.
-For a file that has never been updated, the cross-reference section contains only one subsection,
-whose object numbering begins at 0.</p>
-<p>Each cross-reference subsection contains entries for a contiguous range of object numbers.
-The subsection begins with a line containing two numbers, separated by a space:
-the object number of the first object in this subsection and the number of entries in the subsection.
-For example, the line <code>28 5</code>
-introduces a subsection containing five objects, numbered consecutively from 28 to 32.</p>
-<p>An overall example seems like:</p>
-<pre><code class="language-plaintext">   xref
-0 1
-0000000000 65535 f
-3 1
-0000025325 00000 n
-23 2
-0000025518 00002 n
-0000025635 00000 n
-30 1
-0000025777 00000 n
-```</code></pre>
+  <p>Outlines dictionary (Optional; must be an indirect reference) The outline dictionary that is
+the root of the document’s outline hierarchy (see Section 7.2.2, “Document Outline”).
+Threads array (Optional; PDF 1.1; must be an indirect reference)
+An array of thread dictionaries representing the document’s article threads (see Section 7.3.2,“Articles”).</p>
 
 
 
@@ -241,33 +210,85 @@ introduces a subsection containing five objects, numbered consecutively from 28 
   </h2>
   
     
-      src\pdf\document\crossref.cr
+      src\pdf\document\pagetree\catalog.cr
     
     <br/>
   
 
 
 
-
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Constructors
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="UseNone">
+        <strong>UseNone</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Neither document outline nor thumbnail images visible</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UseOutLines">
+        <strong>UseOutLines</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Document outline visible</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UseThumbs">
+        <strong>UseThumbs</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Thumbnail images visible</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="FullScreen">
+        <strong>FullScreen</strong> = <code><span class="n">3</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Full-screen mode, with no menu bar, window controls, or any other window visible</p>
+      </dd>
+      
+    
+  </dl>
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
   </h2>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28start%3AInt32%2Centries%3AArray%28PDF%3A%3ADocument%3A%3ACrossRef%3A%3AEntry%29%29-class-method" class="signature"><strong>.new</strong>(start : Int32, entries : Array(PDF::Document::CrossRef::Entry))</a>
+        <a href="#default-class-method" class="signature"><strong>.default</strong></a>
+        
+          <div class="summary"><p>Default value: UseNone.</p></div>
         
       </li>
     
   </ul>
-
-
 
 
 
@@ -282,7 +303,27 @@ introduces a subsection containing five objects, numbered consecutively from 28 
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#size-instance-method" class="signature"><strong>#size</strong></a>
+        <a href="#full_screen%3F-instance-method" class="signature"><strong>#full_screen?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_name%3AName-instance-method" class="signature"><strong>#to_name</strong> : Name</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#use_none%3F-instance-method" class="signature"><strong>#use_none?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#use_out_lines%3F-instance-method" class="signature"><strong>#use_out_lines?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#use_thumbs%3F-instance-method" class="signature"><strong>#use_thumbs?</strong></a>
         
       </li>
     
@@ -314,25 +355,52 @@ introduces a subsection containing five objects, numbered consecutively from 28 
 
 
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+
+
   <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Constructor Detail
+    Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="new(start:Int32,entries:Array(PDF::Document::CrossRef::Entry))-class-method">
+    <div class="entry-detail" id="default-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(start : Int32, entries : Array(<a href="../../PDF/Document/CrossRef/Entry.html">PDF::Document::CrossRef::Entry</a>))
+        def self.<strong>default</strong>
 
-        <a class="method-permalink" href="#new%28start%3AInt32%2Centries%3AArray%28PDF%3A%3ADocument%3A%3ACrossRef%3A%3AEntry%29%29-class-method">#</a>
+        <a class="method-permalink" href="#default-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Default value: UseNone.</p>
+        </div>
       
       <br/>
       <div>
@@ -340,8 +408,6 @@ introduces a subsection containing five objects, numbered consecutively from 28 
       </div>
     </div>
   
-
-
 
 
 
@@ -354,12 +420,68 @@ introduces a subsection containing five objects, numbered consecutively from 28 
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="size-instance-method">
+    <div class="entry-detail" id="full_screen?-instance-method">
       <div class="signature">
         
-        def <strong>size</strong>
+        def <strong>full_screen?</strong>
 
-        <a class="method-permalink" href="#size-instance-method">#</a>
+        <a class="method-permalink" href="#full_screen%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_name:Name-instance-method">
+      <div class="signature">
+        
+        def <strong>to_name</strong> : <a href="../../PDF/Name.html">Name</a>
+
+        <a class="method-permalink" href="#to_name%3AName-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="use_none?-instance-method">
+      <div class="signature">
+        
+        def <strong>use_none?</strong>
+
+        <a class="method-permalink" href="#use_none%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="use_out_lines?-instance-method">
+      <div class="signature">
+        
+        def <strong>use_out_lines?</strong>
+
+        <a class="method-permalink" href="#use_out_lines%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="use_thumbs?-instance-method">
+      <div class="signature">
+        
+        def <strong>use_thumbs?</strong>
+
+        <a class="method-permalink" href="#use_thumbs%3F-instance-method">#</a>
       </div>
       
       <br/>

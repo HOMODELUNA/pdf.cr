@@ -1,20 +1,15 @@
 require "./header"
 module PDF
-  # 最小的PDF文档必须包含许多基本部分：
+  #A canonical PDF file initially consists of four elements : 
+  #- A one-line header identifying the version number of the PDF specification to which the file conforms 
+  #- A body containing the objects that make up the document contained in the file 
+  #- A cross-reference table containing information about the indirect objects in the file 
+  #- A trailer giving the location of the cross-reference table and of certain special objects within the body of the file
   #
-  # - trailer字典，提供有关如何阅读其余内容的信息文件中的对象
-  # - 文档目录，它是对象图的根。
-  # - 页面树，它枚举文档中的页面。
-  # - 至少有一页。每个页面必须具有：
-  # - - resources(资源)，包括例如字体。
-  # - - 其页面内容，其中包含绘制文本和图形的说明在页面上。
-  #
-  # 另一种说法是:一个简单有效的PDF文件按顺序包含四个部分:
-  #
-  # - header，提供PDF版本号
-  # - body 包含页面，图形内容和大部分辅助信息的主体，全部编码为一系列对象。
-  # - 交叉引用表，列出文件中每个对象的位置便于随机访问。
-  # - trailer包括trailer字典，它有助于找到文件的每个部分， 并列出可以在不处理整个文件的情况下读取的各种元数据。
+  # The body of a PDF file consists of a sequence of indirect objects representing the
+  # contents of a document. The objects, which are of the basic types described in
+  # Section 3.2, “Objects,” represent components of the document such as fonts,
+  # pages, and sampled images.
   class Document
     #提供PDF版本号
     @header : Header

@@ -56,13 +56,48 @@
       
         <ul>
   
+  <li class="parent " data-id="pdf/PDF/Catalog" data-name="pdf::catalog">
+      <a href="../PDF/Catalog.html">Catalog</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pdf/PDF/Catalog/PageLayout" data-name="pdf::catalog::pagelayout">
+      <a href="../PDF/Catalog/PageLayout.html">PageLayout</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Catalog/PageMode" data-name="pdf::catalog::pagemode">
+      <a href="../PDF/Catalog/PageMode.html">PageMode</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent open current" data-id="pdf/PDF/Document" data-name="pdf::document">
       <a href="../PDF/Document.html">Document</a>
       
         <ul>
   
-  <li class=" " data-id="pdf/PDF/Document/CrossRef" data-name="pdf::document::crossref">
+  <li class="parent " data-id="pdf/PDF/Document/CrossRef" data-name="pdf::document::crossref">
       <a href="../PDF/Document/CrossRef.html">CrossRef</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pdf/PDF/Document/CrossRef/Entry" data-name="pdf::document::crossref::entry">
+      <a href="../PDF/Document/CrossRef/Entry.html">Entry</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Document/Encrypt" data-name="pdf::document::encrypt">
+      <a href="../PDF/Document/Encrypt.html">Encrypt</a>
       
     </li>
   
@@ -86,8 +121,18 @@
       
     </li>
   
+  <li class=" " data-id="pdf/PDF/NumberTree" data-name="pdf::numbertree">
+      <a href="../PDF/NumberTree.html">NumberTree</a>
+      
+    </li>
+  
   <li class=" " data-id="pdf/PDF/ObjType" data-name="pdf::objtype">
       <a href="../PDF/ObjType.html">ObjType</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/PageTreeNode" data-name="pdf::pagetreenode">
+      <a href="../PDF/PageTreeNode.html">PageTreeNode</a>
       
     </li>
   
@@ -96,8 +141,8 @@
       
     </li>
   
-  <li class=" " data-id="pdf/PDF/Ref" data-name="pdf::ref">
-      <a href="../PDF/Ref.html">Ref</a>
+  <li class=" " data-id="pdf/PDF/PdfRef" data-name="pdf::pdfref">
+      <a href="../PDF/PdfRef.html">PdfRef</a>
       
     </li>
   
@@ -139,30 +184,17 @@
     Overview
   </h2>
 
-  <p>最小的PDF文档必须包含许多基本部分：</p>
+  <p>A canonical PDF file initially consists of four elements :</p>
 <ul>
-<li>trailer字典，提供有关如何阅读其余内容的信息文件中的对象</li>
-<li>文档目录，它是对象图的根。</li>
-<li>页面树，它枚举文档中的页面。</li>
-<li>至少有一页。每个页面必须具有：</li>
-<li>
-<ul>
-<li>resources(资源)，包括例如字体。</li>
+<li>A one-line header identifying the version number of the PDF specification to which the file conforms</li>
+<li>A body containing the objects that make up the document contained in the file</li>
+<li>A cross-reference table containing information about the indirect objects in the file</li>
+<li>A trailer giving the location of the cross-reference table and of certain special objects within the body of the file</li>
 </ul>
-</li>
-<li>
-<ul>
-<li>其页面内容，其中包含绘制文本和图形的说明在页面上。</li>
-</ul>
-</li>
-</ul>
-<p>另一种说法是:一个简单有效的PDF文件按顺序包含四个部分:</p>
-<ul>
-<li>header，提供PDF版本号</li>
-<li>body 包含页面，图形内容和大部分辅助信息的主体，全部编码为一系列对象。</li>
-<li>交叉引用表，列出文件中每个对象的位置便于随机访问。</li>
-<li>trailer包括trailer字典，它有助于找到文件的每个部分， 并列出可以在不处理整个文件的情况下读取的各种元数据。</li>
-</ul>
+<p>The body of a PDF file consists of a sequence of indirect objects representing the
+contents of a document. The objects, which are of the basic types described in
+Section 3.2, “Objects,” represent components of the document such as fonts,
+pages, and sampled images.</p>
 
 
 
@@ -193,6 +225,11 @@
   
     
       src\pdf\document\document.cr
+    
+    <br/>
+  
+    
+      src\pdf\document\encrypt.cr
     
     <br/>
   

@@ -1,12 +1,12 @@
 # pdf.cr 
 > PDF for Crystal
-forked from [marceloboeira]https://github.com/marceloboeira/pdf.cr
+forked from [marceloboeira's repository](https://github.com/marceloboeira/pdf.cr)
 
 this lib provides generation and (todo) analysis of pdf documents
 
 Some of the document is written in Chinese, and they will later be replaced with texts from the standard
 
-We 'll first support PDF-1.3
+We'll first support PDF-1.3, which can be seen in the `references` directory
 ## Installation
 
 Add this to your application's `shard.yml`:
@@ -18,6 +18,9 @@ dependencies:
 ```
 
 ## Contributing
+
+We're now mapping types definition from scecification to crystal, part of our result can be seen in the `/src/document` directory.
+If you want to contribute, please help us to map all the types needed to crystal, adding comments from the reference is also welcomed.
 
 1. Fork it (https://github.com/homodeluna/pdf.cr/fork)
 2. Create your feature branch (git checkout -b my-new-feature)

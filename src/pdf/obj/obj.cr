@@ -8,9 +8,6 @@ module PDF
     end
   end
 
-  alias ObjType = Int64 | Float64 | String | Name | Bool | Nil \
-    | Array(ObjType) | Hash(String,ObjType) | Stream | Ref
-
   # PDF supports eight basic types of object,five atoms and three comprehensives: 
   #- Boolean values
   #- Integer and real numbers
@@ -20,10 +17,17 @@ module PDF
   #- Dictionaries
   #- Streams
   #- The null object (represented as nil in crystal)
-  class PdfObj
-    @id =0
-    @version =0
-    @obj : ObjType = nil
+  alias ObjType = Int64 | Float64 | String | Name | Bool | Nil \
+    | Array(ObjType) | Hash(String,ObjType) | Stream | PdfRef 
+
+  
+  abstract class PdfObj
+    
+    abstract def id : Int64?
+    
+    def generation
+      0
+    end
 
     def self.raw_output(obj : ObjType,io)
       case obj
@@ -33,7 +37,7 @@ module PDF
         io << '<'
         obj.each_codepoint{|cp| (cp & 0xFF).to_s(io,base: 16,precision: 2)}
         io << '>'
-      when Name,Ref
+      when Name,PdfRef
         io << obj.to_s
       when Nil
         io << "null"

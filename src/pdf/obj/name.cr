@@ -28,5 +28,23 @@ module PDF
     def to_s() 
       Name.format(str)
     end
+    #It's helpful in binding enums with `Names` from its symbol. 
+    #An example from this can be seen from `PDF::Catalog::PageLayout#to_name`:
+    #```
+    #Name.symcases( self,SinglePage,OneColumn,TwoColumnLeft, TwoColumnRight)
+    ##expand to 
+    #case self
+    #when SinglePage then Name.new("SinglePage")
+    #when OneColumn then Name.new("OneColumn")
+    #when TwoColumnLeft then Name.new("TwoColumnLeft")
+    #when TwoColumnRight then Name.new("TwoColumnRight")
+    #end
+    macro sym_cases(source,*namesyms)
+      case {{source}}
+      {%for sym in namesyms %}
+      when {{sym.id}} then Name.new({{sym.id.to_s}})
+      {% end %}
+      end
+    end
   end
 end
