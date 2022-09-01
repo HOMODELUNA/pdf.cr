@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_name" content="pdf">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="pdf">
+  <title>PDF::Stream - pdf master-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          pdf
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="pdf/PDF" data-name="pdf">
+      <a href="../PDF.html">PDF</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="pdf/PDF/Document" data-name="pdf::document">
+      <a href="../PDF/Document.html">Document</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pdf/PDF/Document/CrossRef" data-name="pdf::document::crossref">
+      <a href="../PDF/Document/CrossRef.html">CrossRef</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Document/Header" data-name="pdf::document::header">
+      <a href="../PDF/Document/Header.html">Header</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Document/Trailer" data-name="pdf::document::trailer">
+      <a href="../PDF/Document/Trailer.html">Trailer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Name" data-name="pdf::name">
+      <a href="../PDF/Name.html">Name</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/ObjType" data-name="pdf::objtype">
+      <a href="../PDF/ObjType.html">ObjType</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/PdfObj" data-name="pdf::pdfobj">
+      <a href="../PDF/PdfObj.html">PdfObj</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Ref" data-name="pdf::ref">
+      <a href="../PDF/Ref.html">Ref</a>
+      
+    </li>
+  
+  <li class=" current" data-id="pdf/PDF/Stream" data-name="pdf::stream">
+      <a href="../PDF/Stream.html">Stream</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> PDF::Stream
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../PDF/Stream.html">PDF::Stream</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A stream object, like a string object, is a sequence of bytes.
+However, a PDF application can read a stream incrementally, while a string must be read in its entirety.</p>
+<p>Furthermore, a stream can be of unlimited length, whereas a string is subject to
+an implementation limit. For this reason, objects with potentially large amounts
+of data, such as images and page descriptions, are represented as streams.</p>
+<p><em>Note</em>: As with strings, this section describes only the syntax for writing a stream as a
+sequence of bytes. What those bytes represent is determined by the context in which
+the stream is referenced.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      src\pdf\obj\stream.cr
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28dict%3AHash%28String%2CPDF%3A%3APdfObj%29%2Cbytes%3AArray%28UInt8%29%29-class-method" class="signature"><strong>.new</strong>(dict : Hash(String, PDF::PdfObj), bytes : Array(UInt8))</a>
+        
+          <div class="summary"><p>dict中不必指明字节数,因为计算时可以推出来</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#decode_params%3AArray%28PDF%3A%3APdfObj%29%7CHash%28String%2CPDF%3A%3APdfObj%29%7CNil-instance-method" class="signature"><strong>#decode_params</strong> : Array(PDF::PdfObj) | Hash(String, PDF::PdfObj) | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#decode_params%3D%28decode_params%3AArray%28PDF%3A%3APdfObj%29%7CHash%28String%2CPDF%3A%3APdfObj%29%7CNil%29-instance-method" class="signature"><strong>#decode_params=</strong>(decode_params : Array(PDF::PdfObj) | Hash(String, PDF::PdfObj) | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#filter%3AArray%28PDF%3A%3AName%29%7CPDF%3A%3AName%7CNil-instance-method" class="signature"><strong>#filter</strong> : Array(PDF::Name) | PDF::Name | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#filter%3D%28filter%3AArray%28PDF%3A%3AName%29%7CPDF%3A%3AName%7CNil%29-instance-method" class="signature"><strong>#filter=</strong>(filter : Array(PDF::Name) | PDF::Name | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#length-instance-method" class="signature"><strong>#length</strong></a>
+        
+          <div class="summary"><p>The number of bytes from the beginning of the line following the keyword stream to the last byte just before the keyword endstream.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#raw_output%28io%3AIO%29-instance-method" class="signature"><strong>#raw_output</strong>(io : IO)</a>
+        
+          <div class="summary"><p>print keyword and boty bytes TODO:add filter and cryptor</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(dict:Hash(String,PDF::PdfObj),bytes:Array(UInt8))-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(dict : Hash(String, <a href="../PDF/PdfObj.html">PDF::PdfObj</a>), bytes : Array(UInt8))
+
+        <a class="method-permalink" href="#new%28dict%3AHash%28String%2CPDF%3A%3APdfObj%29%2Cbytes%3AArray%28UInt8%29%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>dict中不必指明字节数,因为计算时可以推出来</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="decode_params:Array(PDF::PdfObj)|Hash(String,PDF::PdfObj)|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>decode_params</strong> : Array(<a href="../PDF/PdfObj.html">PDF::PdfObj</a>) | Hash(String, <a href="../PDF/PdfObj.html">PDF::PdfObj</a>) | Nil
+
+        <a class="method-permalink" href="#decode_params%3AArray%28PDF%3A%3APdfObj%29%7CHash%28String%2CPDF%3A%3APdfObj%29%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="decode_params=(decode_params:Array(PDF::PdfObj)|Hash(String,PDF::PdfObj)|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>decode_params=</strong>(decode_params : Array(<a href="../PDF/PdfObj.html">PDF::PdfObj</a>) | Hash(String, <a href="../PDF/PdfObj.html">PDF::PdfObj</a>) | Nil)
+
+        <a class="method-permalink" href="#decode_params%3D%28decode_params%3AArray%28PDF%3A%3APdfObj%29%7CHash%28String%2CPDF%3A%3APdfObj%29%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="filter:Array(PDF::Name)|PDF::Name|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>filter</strong> : Array(<a href="../PDF/Name.html">PDF::Name</a>) | <a href="../PDF/Name.html">PDF::Name</a> | Nil
+
+        <a class="method-permalink" href="#filter%3AArray%28PDF%3A%3AName%29%7CPDF%3A%3AName%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="filter=(filter:Array(PDF::Name)|PDF::Name|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>filter=</strong>(filter : Array(<a href="../PDF/Name.html">PDF::Name</a>) | <a href="../PDF/Name.html">PDF::Name</a> | Nil)
+
+        <a class="method-permalink" href="#filter%3D%28filter%3AArray%28PDF%3A%3AName%29%7CPDF%3A%3AName%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="length-instance-method">
+      <div class="signature">
+        
+        def <strong>length</strong>
+
+        <a class="method-permalink" href="#length-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>The number of bytes from the beginning of the line following the keyword stream to the last byte just before the keyword
+endstream. (There may be an additional EOL marker, preceding endstream, that is not included in the count and is not logically part of
+the stream data.)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="raw_output(io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>raw_output</strong>(io : IO)
+
+        <a class="method-permalink" href="#raw_output%28io%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>print keyword and boty bytes</p>
+<p><span class="flag orange">TODO</span> add filter and cryptor</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

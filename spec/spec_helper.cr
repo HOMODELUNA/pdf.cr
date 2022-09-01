@@ -1,4 +1,4 @@
 require "../src/pdf"
-require "spec2"
+require "spec"
 
-include Spec2::GlobalDSL
+

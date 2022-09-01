@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.5.0">
+<meta name="crystal_docs.project_version" content="master-dev">
+<meta name="crystal_docs.project_name" content="pdf">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="pdf">
+  <title>PDF::Document - pdf master-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          pdf
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="pdf/PDF" data-name="pdf">
+      <a href="../PDF.html">PDF</a>
+      
+        <ul>
+  
+  <li class="parent open current" data-id="pdf/PDF/Document" data-name="pdf::document">
+      <a href="../PDF/Document.html">Document</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pdf/PDF/Document/CrossRef" data-name="pdf::document::crossref">
+      <a href="../PDF/Document/CrossRef.html">CrossRef</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Document/Header" data-name="pdf::document::header">
+      <a href="../PDF/Document/Header.html">Header</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Document/Trailer" data-name="pdf::document::trailer">
+      <a href="../PDF/Document/Trailer.html">Trailer</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Name" data-name="pdf::name">
+      <a href="../PDF/Name.html">Name</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/ObjType" data-name="pdf::objtype">
+      <a href="../PDF/ObjType.html">ObjType</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/PdfObj" data-name="pdf::pdfobj">
+      <a href="../PDF/PdfObj.html">PdfObj</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Ref" data-name="pdf::ref">
+      <a href="../PDF/Ref.html">Ref</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Stream" data-name="pdf::stream">
+      <a href="../PDF/Stream.html">Stream</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> PDF::Document
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../PDF/Document.html">PDF::Document</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>最小的PDF文档必须包含许多基本部分：</p>
+<ul>
+<li>trailer字典，提供有关如何阅读其余内容的信息文件中的对象</li>
+<li>文档目录，它是对象图的根。</li>
+<li>页面树，它枚举文档中的页面。</li>
+<li>至少有一页。每个页面必须具有：</li>
+<li>
+<ul>
+<li>resources(资源)，包括例如字体。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>其页面内容，其中包含绘制文本和图形的说明在页面上。</li>
+</ul>
+</li>
+</ul>
+<p>另一种说法是:一个简单有效的PDF文件按顺序包含四个部分:</p>
+<ul>
+<li>header，提供PDF版本号</li>
+<li>body 包含页面，图形内容和大部分辅助信息的主体，全部编码为一系列对象。</li>
+<li>交叉引用表，列出文件中每个对象的位置便于随机访问。</li>
+<li>trailer包括trailer字典，它有助于找到文件的每个部分， 并列出可以在不处理整个文件的情况下读取的各种元数据。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      src\pdf\document\crossref.cr
+    
+    <br/>
+  
+    
+      src\pdf\document\document.cr
+    
+    <br/>
+  
+    
+      src\pdf\document\header.cr
+    
+    <br/>
+  
+    
+      src\pdf\document\trailer.cr
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28header%3APDF%3A%3ADocument%3A%3AHeader%2Cboty%2Ccrossrefs%3AInt32%2Ctrailers%3AInt32%29-class-method" class="signature"><strong>.new</strong>(header : PDF::Document::Header, boty, crossrefs : Int32, trailers : Int32)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#render%28io%3AIO%29-instance-method" class="signature"><strong>#render</strong>(io : IO)</a>
+        
+          <div class="summary"><p>将PDF文档写入文件中的一系列字节要比阅读它简单得多， 我们不需要支持所有PDF格式，只需要支持我们打算使用的子集。写作 PDF文件非常快，因为它只是将对象图展平为一系列字节。  - 输出header。 - 删除PDF中任何其他对象未引用的任何对象。这个避免编写不再需要的对象。 - 重新编号对象，使它们从1到n运行，其中n是对象的数量文件。 - 逐个输出对象，从对象编号1开始，记录字节交叉引用表的每个偏移量。 - 编写交叉引用表。 - 编写trailer，trailer字典和文件结束标记</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(header:PDF::Document::Header,boty,crossrefs:Int32,trailers:Int32)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(header : <a href="../PDF/Document/Header.html">PDF::Document::Header</a>, boty, crossrefs : Int32, trailers : Int32)
+
+        <a class="method-permalink" href="#new%28header%3APDF%3A%3ADocument%3A%3AHeader%2Cboty%2Ccrossrefs%3AInt32%2Ctrailers%3AInt32%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="render(io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>render</strong>(io : IO)
+
+        <a class="method-permalink" href="#render%28io%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>将PDF文档写入文件中的一系列字节要比阅读它简单得多， 我们不需要支持所有PDF格式，只需要支持我们打算使用的子集。写作 PDF文件非常快，因为它只是将对象图展平为一系列字节。</p>
+<ul>
+<li>输出header。</li>
+<li>删除PDF中任何其他对象未引用的任何对象。这个避免编写不再需要的对象。</li>
+<li>重新编号对象，使它们从1到n运行，其中n是对象的数量文件。</li>
+<li>逐个输出对象，从对象编号1开始，记录字节交叉引用表的每个偏移量。</li>
+<li>编写交叉引用表。</li>
+<li>编写trailer，trailer字典和文件结束标记</li>
+</ul>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
