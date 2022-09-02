@@ -10,7 +10,7 @@ module PDF
   # Acrobat Distiller and PDF Writer programs construct trees of a particular form,
   # known as balanced trees. Further information on this form of tree can be found in
   # Data Structures and Algorithms, by Aho, Hopcroft, and Ullman (see the Bibliography).
-
+  #
   # for example, this is a pagetree with its child pages
   #```plaintext
   #   2 0 obj

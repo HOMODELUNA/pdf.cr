@@ -76,6 +76,41 @@
       
     </li>
   
+  <li class="parent " data-id="pdf/PDF/Data" data-name="pdf::data">
+      <a href="../PDF/Data.html">Data</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pdf/PDF/Data/Date" data-name="pdf::data::date">
+      <a href="../PDF/Data/Date.html">Date</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Data/NameTree" data-name="pdf::data::nametree">
+      <a href="../PDF/Data/NameTree.html">NameTree</a>
+      
+    </li>
+  
+  <li class="parent " data-id="pdf/PDF/Data/Ractangle" data-name="pdf::data::ractangle">
+      <a href="../PDF/Data/Ractangle.html">Ractangle</a>
+      
+        <ul>
+  
+  <li class=" " data-id="pdf/PDF/Data/Ractangle/Number" data-name="pdf::data::ractangle::number">
+      <a href="../PDF/Data/Ractangle/Number.html">Number</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="pdf/PDF/Document" data-name="pdf::document">
       <a href="../PDF/Document.html">Document</a>
       
@@ -128,6 +163,11 @@
   
   <li class=" " data-id="pdf/PDF/ObjType" data-name="pdf::objtype">
       <a href="../PDF/ObjType.html">ObjType</a>
+      
+    </li>
+  
+  <li class=" " data-id="pdf/PDF/Page" data-name="pdf::page">
+      <a href="../PDF/Page.html">Page</a>
       
     </li>
   
@@ -184,7 +224,17 @@
     Overview
   </h2>
 
-  <p>for example, this is a pagetree with its child pages</p>
+  <p>The pages of a document are accessed through a structure known as the page tree,
+which defines their ordering within the document. The tree structure allows PDF
+viewer applications to quickly open a document containing thousands of pages
+using only limited memory. The tree contains nodes of two types—intermediate
+nodes, called page tree nodes, and leaf nodes, called page objects—whose form is
+described in the sections below. Viewer applications should be prepared to handle any form of tree structure built of such nodes. The simplest structure would
+consist of a single page tree node that references all of the document’s page objects directly; however, to optimize the performance of viewer applications, the
+Acrobat Distiller and PDF Writer programs construct trees of a particular form,
+known as balanced trees. Further information on this form of tree can be found in
+Data Structures and Algorithms, by Aho, Hopcroft, and Ullman (see the Bibliography).</p>
+<p>for example, this is a pagetree with its child pages</p>
 <pre><code class="language-plaintext">  2 0 obj
 &lt;&lt; /Type /Pages
 /Kids [ 4 0 R
