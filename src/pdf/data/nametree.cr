@@ -12,19 +12,26 @@ module PDF::Data
   # structure to be read from the PDF file. (In contrast, a dictionary is subject to an
   # implementation limit on the number of entries it can contain.) 
   #
-  # A name tree is constructed of nodes, each of which is a dictionary object.
+  # A name tree is constructed of *nodes*, each of which is a dictionary object.
   # Table 3.22 shows the entries in a node dictionary. The nodes are of three kinds,
   # depending on the specific entries they contain. The tree always has exactly one
-  # root node, which contains a single entry: either Kids or Names but not both. If the
-  # root node has a Names entry, it is the only node in the tree. If it has a Kids entry,
+  # root node, which contains a single entry: either **Kids** or **Names** but not both. If the
+  # root node has a **Names** entry, it is the only node in the tree. If it has a **Kids** entry,
   # then each of the remaining nodes is either an intermediate node, containing a
-  # Limits entry and a Kids entry, or a leaf node, containing a Limits entry and a
-  # Names entry.
+  # Limits entry and a **Kids** entry, or a leaf node, containing a Limits entry and a
+  # **Names** entry.
   class NameTree
+    enum Type
+      Root
+      Intermediate
+      Leaf
+    end
+    @type : Type
+
     # (Root and intermediate nodes only; required in intermediate nodes; present in the root node
     # if and only if Names is not present) An array of indirect references to the immediate children of this node. 
     # The children may be intermediate or leaf nodes. 
-    @kids : Array(PdfRef)?
+    @kids : Array(NameTree)?
     #Names array (Root and leaf nodes only; required in leaf nodes; present in the root node if and only if Kids
     # is not present) An array of the form 
     # `[key1 value1 key2 value2 … keyn valuen]`
@@ -32,12 +39,38 @@ module PDF::Data
     #  where each keyi
     #- is a string and the corresponding valuei
     #- is an indirect reference to the object associated with that key. The keys are sorted in lexical order, as described below. 
-    @names : Array(PdfObj)?
+    @names : Array({String,PdfObj})?
     # Limits array (Intermediate and leaf nodes only; required) An array of two strings, 
     # specifying the (lexically) least and greatest keys included in the Names array of a leaf node or in the Names
     # arrays of any leaf nodes that are descendants of an intermediate node.
-    @limits : Array(PdfObj)?
+    def limits : Array(String)?
+      return nil unless @names
+      minkv,maxkv = names.minmax_by?{|k,v|k}
+      return (minkv && maxkv) ? [kinkv[0],maxkv[0]] : nil
+    end
+
     def initialize(@kids,@names,@limits)
+    end
+    # for mixing-in module `Renderable`
+    def render_to_pdf(io : IO) : IO
+      case @type
+      when Type::Root
+        io << "<< /Kids " 
+        PdfObj.raw_output(@kids.map{|obj| PdfRef.new(obj)},io) <<" >>"
+      when Type::Intermediate
+        io << "<< /Limits "
+        PdfObj.raw_output(limits(),io)
+        io << "/Kids "
+        PdfObj.raw_output(@kids.map{|obj| PdfRef.new(obj)},io) <<" >>"
+      when Type::Leaf
+        io << "<< /Limits "
+        PdfObj.raw_output(limits(),io)
+        io << "/Names "
+        PdfObj.raw_output(@names.sort_by!{|name,_|name}.map{|name_str,obj|{Name.new(name_str),PdfRef.new(obj.id)}},io)
+      else
+        raise "unrecognized name tree"
+      end
+      io
     end
   end
 end

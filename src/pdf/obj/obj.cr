@@ -17,6 +17,9 @@ module PDF
   #- Dictionaries
   #- Streams
   #- The null object (represented as nil in crystal)
+  #
+  #Also, object with id are interreferenced, and therefore should be constructed cautiously.
+  #Their ID to are allocated at output Time 
   alias ObjType = Int64 | Float64 | String | Name | Bool | Nil \
     | Array(ObjType) | Hash(String,ObjType) | Stream | PdfRef 
 
@@ -28,7 +31,7 @@ module PDF
     def generation
       0
     end
-
+    # render basic types into an IO
     def self.raw_output(obj : ObjType,io)
       case obj
       when Int64,Float64,Bool

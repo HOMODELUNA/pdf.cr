@@ -70,9 +70,10 @@ module PDF::Data
         str << hh.to_s(precision=2)
         str << mm_minute.to_s(presion=2)
         str << ss.to_s(precision=2)
-        str << o
+        str << o <<'\''
         str << dh.to_s(precision=2)
         str << dm.to_s(precision=2)
+        str << '\''
       end
     end
   end
