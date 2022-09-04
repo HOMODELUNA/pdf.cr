@@ -1,5 +1,6 @@
 require "./stream"
 require "./ref"
+require "./renderable"
 module PDF
 
   class Name

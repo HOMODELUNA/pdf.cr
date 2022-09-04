@@ -1,4 +1,5 @@
 require "./name"
+require "./renderable"
 module PDF
   #A stream object, like a string object, is a sequence of bytes. 
   #However, a PDF application can read a stream incrementally, while a string must be read in its entirety.
@@ -81,10 +82,11 @@ module PDF
     end
     #print keyword and boty bytes
     #TODO:add filter and cryptor
-    def raw_output(io : IO)
+    def render_to_pdf(io : IO) : IO
       io<<"stream\n";
       #TODO: add filter and cryptor
       io <<"\nendstream\n"
     end
+    include Renderable
   end
 end

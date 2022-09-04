@@ -1,3 +1,4 @@
+require "../obj/renderable"
 module PDF::Data
   # PDF defines a standard date format, which closely follows that of the international 
   # standard ASN.1 (Abstract Syntax Notation One), defined in ISO/IEC 8824 (see the Bibliography). 
@@ -76,5 +77,9 @@ module PDF::Data
         str << '\''
       end
     end
+    def render_to_pdf(io : IO) : IO
+      io << Date.render_to_pdf(@time)
+    end
+    include Renderable
   end
 end

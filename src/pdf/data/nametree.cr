@@ -21,6 +21,7 @@ module PDF::Data
   # Limits entry and a **Kids** entry, or a leaf node, containing a Limits entry and a
   # **Names** entry.
   class NameTree
+    
     enum Type
       Root
       Intermediate
@@ -49,7 +50,7 @@ module PDF::Data
       return (minkv && maxkv) ? [kinkv[0],maxkv[0]] : nil
     end
 
-    def initialize(@kids,@names,@limits)
+    def initialize(@type,@kids,@names)
     end
     # for mixing-in module `Renderable`
     def render_to_pdf(io : IO) : IO
@@ -72,5 +73,6 @@ module PDF::Data
       end
       io
     end
+    include Renderable
   end
 end

@@ -1,3 +1,4 @@
+require "../obj/renderable"
 module PDF::Data
   # Rectangles are used to describe locations on a page and bounding boxes for a
   # variety of objects, such as fonts. A rectangle is written as an array of four numbers
@@ -22,5 +23,10 @@ module PDF::Data
     def format : String
       "[#{llx} #{lly} #{urx} #{ury}]"
     end
+
+    def render_to_pdf(io : IO) : IO
+      io << self.format
+    end
+    include Renderable
   end
 end

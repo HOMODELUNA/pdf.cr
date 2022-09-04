@@ -11,7 +11,7 @@ module PDF
   # on the screen, such as whether its outline and thumbnail page images should be
   # displayed automatically and whether some location other than the first page
   # should be shown when the document is opened.
-  class Catalog
+  class Catalog < PageTree
 
     #The type of PDF object that this dictionary describes; 
     #must be Catalog for the catalog dictionary. 

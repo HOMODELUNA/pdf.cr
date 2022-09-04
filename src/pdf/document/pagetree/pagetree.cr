@@ -1,5 +1,6 @@
 require "../../obj"
 module PDF
+  
   # The pages of a document are accessed through a structure known as the page tree,
   # which defines their ordering within the document. The tree structure allows PDF
   # viewer applications to quickly open a document containing thousands of pages
