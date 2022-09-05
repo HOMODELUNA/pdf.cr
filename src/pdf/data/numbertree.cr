@@ -1,5 +1,5 @@
 require "../obj"
-module PDF::Data
+module PDF
   #A *number tree* is similar to a name tree (see Section 3.8.4, “Name Trees”), except
   # that its keys are integers instead of strings, sorted in ascending numerical order.
   # The entries in the leaf (or root) nodes containing the key-value pairs are named

@@ -1,4 +1,7 @@
 require "./header"
+require "./pagetree"
+require "./crossref"
+require "./trailer"
 module PDF
   #A canonical PDF file initially consists of four elements : 
   #- A one-line header identifying the version number of the PDF specification to which the file conforms 
@@ -11,28 +14,36 @@ module PDF
   # Section 3.2, “Objects,” represent components of the document such as fonts,
   # pages, and sampled images.
   class Document
+    EOF = "%%EOF"
     #提供PDF版本号
     @header : Header
     #包含页面，图形内容和大部分辅助信息的主体，全部编码为一系列对象。
-    @body=0
+    @body : Catalog
+    def crossrefs(ids : Hash(Object,Int32)) : CrossRef
+    end
     #交叉引用表，列出文件中每个对象的位置便于随机访问。
-    @crossrefs =0
+    #@crossrefs : CrossRef
     #trailer字典，它有助于找到文件的每个部分， 并列出可以在不处理整个文件的情况下读取的各种元数据。
-    @trailers =0
-    def initialize(@header,@boty,@crossrefs,@trailers)
+    @trailers : Trailer
+    def initialize(@header,@body,@crossrefs,@trailers)
     end
 
-    # 将PDF文档写入文件中的一系列字节要比阅读它简单得多， 我们不需要支持所有PDF格式，只需要支持我们打算使用的子集。写作 PDF文件非常快，因为它只是将对象图展平为一系列字节。
+    # Outputing a pdf into bytes is easier than reading it. We needn't support all pdf formats,but just our subset to use.
+    # 
+    # writing a pdf is really fast,because it's just flatten objects into some bytes.
     #
-    #- 输出header。
-    #- 删除PDF中任何其他对象未引用的任何对象。这个避免编写不再需要的对象。
-    #- 重新编号对象，使它们从1到n运行，其中n是对象的数量文件。
-    #- 逐个输出对象，从对象编号1开始，记录字节交叉引用表的每个偏移量。
-    #- 编写交叉引用表。
-    #- 编写trailer，trailer字典和文件结束标记
+    #- output header。
+    #- remove all unuesed objects
+    #- renumber objects from 1 to n
+    #- output objects from number 1, counting each obj in the crossref
+    #- output crossref
+    #- output trailer, and trailer dictionary
+    #- output EOF
     def render(io : IO)
       @header.render(io)
-
+      # output objects from number 1, counting each obj in the crossref
+      # output crossref
+      io << self.crossref
       io<<"%%EOF"
     end
   end

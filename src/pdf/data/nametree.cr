@@ -1,4 +1,4 @@
-module PDF::Data
+module PDF
   # A name tree serves a similar purpose to a dictionary—associating keys and
   # values—but by different means. A name tree differs from a dictionary in the following important ways: 
   #- Unlike the keys in a dictionary, which are name objects, those in a name tree

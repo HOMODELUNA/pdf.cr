@@ -1,3 +1,4 @@
+require "../obj/renderable"
 module PDF
   class Document
     # PDF文件的第一行给出文档的版本号。在我们的示例中，是：
@@ -18,11 +19,12 @@ module PDF
     class Header
       #把一些不可打印的字符添加到PDF标题中 - 这可确保文件被识别为二进制 （而不是文本），例如，通过FTP等文件传输程序。
       MAGIC = "%âãÏÓ"
-      @version ="1.0"
+      @version ="1.3"
 
-      def render(io : IO)
+      def render_to_pdf(io : IO) : IO
         io << "%PDF-" << @version << "\n%âãÏÓ\n"
       end
+      include Renderable
     end
   end
 end

@@ -14,7 +14,7 @@ end
 #Here we overload the method
 class ::IO
   def <<(pdf_obj : PDF::Renderable)
-    odf_obj.render_to_pdf(self)
+    pdf_obj.render_to_pdf(self)
     self
   end
   end

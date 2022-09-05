@@ -1,3 +1,4 @@
+require "../obj/renderable"
 module PDF
   class Document
     # The cross-reference table contains information that permits random access to indirect objects within the file, 
@@ -40,6 +41,7 @@ module PDF
     #```
     class CrossRef
       struct Entry
+        EOL = "\r\n"
         @target : Int32 = 0
         @generation : Int32 = 0
         @using : Bool = true 
@@ -47,8 +49,8 @@ module PDF
         def initialize(@target,@generation = 0 , @using = true)
           if @target >= 1e10
             raise "the target \"#{@target}\"is bigger then 10 digits"
-          elsif @generation >= 1e15
-            raise "the generation number \"#{@generation}\"is bigger then 5 digits"
+          elsif @generation > 65535
+            raise "the generation number \"#{@generation}\"is bigger than 65535"
           end
         end
         # The format of an in-use entry is as follows: 
@@ -60,20 +62,34 @@ module PDF
         #- `ggggg` is a 5-digit generation number 
         #- `n` is a literal keyword identifying this as an in-use entry ,for a free entry use `f`
         #- `eol` is a 2-character end-of-line sequence
-        def format : String
-          "#{@target.to_s(precision=10)} #{@generation.to_s(precision=5)} #{@using ? 'n' : 'f'}\r\n"
+        #
+        # because a n EOL is just "\r\n",you won't need to add a newline manually
+        def render_to_pdf(io : IO) : IO
+          @target.to_s(io,precision: 10)
+          io<<' '
+          @generation.to_s(io,precision: 5)
+          io<<' '<<(@using ? 'n' : 'f') << EOL
         end
+        include Renderable
       end
 
-      @start = 0
+      START = 0
       @entries : Array(Entry) 
 
-      def initialize(@start,@entries)
+      def initialize(@entries)
       
       end
 
       def size
         @entries.size
+      end
+
+      def render_to_pdf(io : IO) : IO
+        io<< START << ' '<< self.size()<<'\n'
+        @entries.each do |en|
+          io << en
+        end
+        io
       end
     end
   end  

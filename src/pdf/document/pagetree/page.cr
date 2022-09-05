@@ -23,7 +23,7 @@ module PDF
     # (Required; inheritable) A rectangle (see Section 3.8.3, “Rectangles”), expressed in default user space units,
     # defining the maximum imageable area of the physical medium on which the page is to be printed 
     # (seeSection 8.6.1, “Page Boundaries”). 
-    @MediaBox :  Rectangle
+    @MediaBox :  Rectangle = Rectangle.new(0,0,0,0)
     #(Optional; inheritable) A rectangle, expressed in default user space units,
     # defining the region to which the contents of the page are to be clipped
     # (cropped) when displayed or printed (see Section 8.6.1, “Page Boundaries”). Default value: the value of MediaBox. 
@@ -60,10 +60,8 @@ module PDF
     #An array of indirect references to article beads appearing on the page (see
     # Section 7.3.2, “Articles”; see also implementation note 20 in Appendix H).
     # The beads are listed in the array in natural reading order.
-    @b : Array?
+    @b  =0 #Array?
 
-    def initialize(@)
-    end
     
   end
 end

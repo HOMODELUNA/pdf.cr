@@ -1,5 +1,5 @@
 require "../obj/renderable"
-module PDF::Data
+module PDF
   # PDF defines a standard date format, which closely follows that of the international 
   # standard ASN.1 (Abstract Syntax Notation One), defined in ISO/IEC 8824 (see the Bibliography). 
   # A date is a string of the form 

@@ -1,3 +1,4 @@
+require "../obj/renderable"
 module PDF
   class Document
     # The trailer of a PDF file enables an application reading the file to quickly find the
@@ -54,7 +55,11 @@ module PDF
       # the file is created; the second is changed each time the file is updated.
       #TODO: FileIdentifier
       @id : Array(String)?
-
+      #TODO:
+      def render_to_pdf(io : IO) : IO
+        io
+      end
+      include Renderable
     end
   end
 end

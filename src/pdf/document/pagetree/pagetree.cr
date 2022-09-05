@@ -1,4 +1,5 @@
 require "../../obj"
+require "./catalog"
 module PDF
   
   # The pages of a document are accessed through a structure known as the page tree,

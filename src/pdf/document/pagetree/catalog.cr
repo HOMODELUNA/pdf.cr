@@ -1,5 +1,6 @@
 require "../../obj"
 require "./abstract_pagetree"
+require "../../data"
 module PDF
   
   # The root of a document’s object hierarchy is the catalog dictionary, located via the
@@ -84,14 +85,14 @@ module PDF
         end
       end
     end
-    @page_mode : Name = PageMode.default
+    @page_mode : PageMode = PageMode.default
     # A value specifying a destination to be displayed 
     # or dictionary an action to be performed when the document is opened. 
     # The value is an array defining a destination (see Section 7.2.1, “Destinations”)
     # or an action dictionary representing an action (Section 7.5, “Actions”).
     # If this entry is absent, the document should be opened to the top of the
     # first page at the default magnification factor. 
-    @open_action = Array(Int32) | Hash(String ,String) | Nil
+    @open_action : Array(Int32) | Hash(String ,String) | Nil
     #A dictionary containing document-level information for uniform resource identifier (URI) actions 
     #(see “URI Actions” on page 428). 
     @uri : Hash(String,String)?

@@ -1,5 +1,5 @@
 require "../obj/renderable"
-module PDF::Data
+module PDF
   # Rectangles are used to describe locations on a page and bounding boxes for a
   # variety of objects, such as fonts. A rectangle is written as an array of four numbers
   # giving the coordinates of a pair of diagonally opposite corners. Typically, the
@@ -10,7 +10,7 @@ module PDF::Data
   #it is acceptable to specify any two diagonally opposite corners. 
   #Applications that process PDF should be prepared to normalize such rectangles in situations
   # where specific corners are required.
-  class Ractangle
+  class Rectangle
     alias Number = Int64 | Float64
     getter llx
     getter lly
