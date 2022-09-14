@@ -65,6 +65,7 @@ module PDF
         #
         # because a n EOL is just "\r\n",you won't need to add a newline manually
         def render_to_pdf(io : IO) : IO
+          
           @target.to_s(io,precision: 10)
           io<<' '
           @generation.to_s(io,precision: 5)
@@ -85,6 +86,7 @@ module PDF
       end
 
       def render_to_pdf(io : IO) : IO
+        io.puts( "xref")
         io<< START << ' '<< self.size()<<'\n'
         @entries.each do |en|
           io << en

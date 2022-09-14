@@ -2,6 +2,7 @@ require "./header"
 require "./pagetree"
 require "./crossref"
 require "./trailer"
+require "../obj/renderable"
 module PDF
   #A canonical PDF file initially consists of four elements : 
   #- A one-line header identifying the version number of the PDF specification to which the file conforms 
@@ -13,6 +14,9 @@ module PDF
   # contents of a document. The objects, which are of the basic types described in
   # Section 3.2, “Objects,” represent components of the document such as fonts,
   # pages, and sampled images.
+  # 
+  # in the code we should pretain the document structure, not the actual text te output.
+  # the real form will be generated at render time
   class Document
     EOF = "%%EOF"
     #提供PDF版本号
@@ -39,11 +43,20 @@ module PDF
     #- output crossref
     #- output trailer, and trailer dictionary
     #- output EOF
-    def render(io : IO)
+    def render_to_pdf(io : IO)
+      header_str = String.build
       @header.render(io)
+      id_table = {} of UInt32 => Renderable
+      @catalog.register_to_id_table(id_table)
+      id_table.each do |id,object|
+        io << id <<" 0 obj\n"
+        object.render_to_pdf(io)
+        io.puts("endobj")
+      end
       # output objects from number 1, counting each obj in the crossref
       # output crossref
-      io << self.crossref
+      io << self.crossrefs()
+      io<< @trailer
       io<<"%%EOF"
     end
   end

@@ -6,6 +6,8 @@
 #```crystal
 #  def render_to_pdf(io : IO) : IO
 #```
+#it means putting all the required data into an io.
+#unless explicitly required, the output **does** contains a newline
 module PDF::Renderable
   #render your data into a pdf file , and return the rendered IO
   abstract def render_to_pdf(io : IO) : IO
